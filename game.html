@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferlyn's Interactive Resume</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      background: linear-gradient(135deg, #fff0f6, #ffe0ed, #fff7fb);
+      color: #71445b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .game {
+      background: rgba(255, 255, 255, 0.94);
+      width: 100%;
+      max-width: 650px;
+      padding: 28px;
+      border: 3px solid #ffc5dc;
+      border-radius: 28px;
+      box-shadow: 0 10px 30px rgba(204, 112, 157, 0.16);
+      text-align: center;
+    }
+
+    .heart {
+      font-size: 38px;
+      margin-bottom: 5px;
+    }
+
+    h1 {
+      color: #d65d96;
+      margin: 5px 0 10px;
+      font-size: 28px;
+    }
+
+    h2 {
+      color: #cc6094;
+      font-size: 23px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #a4778d;
+      margin-bottom: 20px;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .progress-bar {
+      height: 12px;
+      background: #ffe4ef;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .progress {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #f6a3c7, #d96b9f);
+      border-radius: 20px;
+      transition: width 0.3s;
+    }
+
+    .level-tag {
+      display: inline-block;
+      background: #fff0f6;
+      color: #c75a8e;
+      border-radius: 20px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    #question {
+      font-size: 19px;
+      line-height: 1.6;
+      margin: 20px 0;
+    }
+
+    .choices {
+      display: grid;
+      gap: 11px;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .choice {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #f5c0d8;
+      border-radius: 16px;
+      background: #fff7fb;
+      color: #985577;
+      transition: 0.2s;
+      line-height: 1.4;
+    }
+
+    .choice:hover:not(:disabled) {
+      background: #ffe5f0;
+      transform: translateY(-2px);
+    }
+
+    .choice:disabled {
+      cursor: default;
+      opacity: 0.85;
+    }
+
+    #feedback {
+      margin: 18px 0;
+      line-height: 1.7;
+      text-align: left;
+      overflow-wrap: anywhere;
+    }
+
+    #feedback h3 {
+      color: #ce5c95;
+      text-align: center;
+    }
+
+    #feedback a {
+      color: #bd4384;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    .action {
+      border: none;
+      border-radius: 24px;
+      background: #e77dad;
+      color: white;
+      padding: 13px 23px;
+      font-weight: bold;
+      margin: 7px 4px;
+      box-shadow: 0 4px 10px #f4d0e1;
+    }
+
+    .action:hover {
+      background: #d9659d;
+    }
+
+    .secondary {
+      background: #fff0f6;
+      color: #bd5e8c;
+      border: 1px solid #f5c0d8;
+      box-shadow: none;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .footer {
+      color: #bd91a7;
+      font-size: 12px;
+      margin-top: 24px;
+    }
+
+    @media (max-width: 450px) {
+      .game {
+        padding: 20px 15px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      #question {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="game">
+    
+<div id="welcomeScreen">
+  <div style="font-size: 45px;"></div>
+
+  <h1>Welcome to My Interactive Resume!</h1>
+
+  <p>
+    Hello there!
+  </p>
+
+  <p>
+    Are you ready to get to know me? Explore my personal
+    information, educational background, skills, strengths,
+    hobbies, and future aspirations. Each section will give
+    you a glimpse of who I am, what I enjoy, and what I hope
+    to achieve.
+  </p>
+
+  <h3>Let's Start</h3>
+
+  <button id="startBtn" class="action">
+  Start My Adventure
+  </button>
+</div>
+    
+    <div class="heart"></div>
+    <h1>Ferlyn's Resume Adventure</h1>
+    <p class="subtitle">
+      🏁
+    </p>
+
+    <div class="progress-info">
+      <span id="levelCount">Level 1 of 7</span>
+      <span id="progressText">0% complete</span>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <div id="gameArea" class="hidden">
+      <span class="level-tag" id="levelName"></span>
+      <h2 id="sectionTitle"></h2>
+      <p id="question"></p>
+      <div class="choices" id="choices"></div>
+      <div id="feedback" aria-live="polite"></div>
+
+      <button id="nextBtn" class="action hidden">
+        Next Level
+      </button>
+    </div>
+
+    <div id="finishArea" class="hidden">
+      <h2> QUEST COMPLETE! </h2>
+      <p>
+        You've unlocked all seven chapters of my interactive resume!
+        Thank you for getting to know me. 
+      </p>
+      <p>
+        Every journey begins with a little curiosity.
+        This is just the beginning of mine!
+      </p>
+
+      <p>
+        <a href="https://github.com/lynnn01-01"
+           target="_blank"
+           rel="noopener noreferrer">
+          <button class="action">Visit My GitHub Profile</button>
+        </a>
+      </p>
+
+      <p>
+        <a href="https://lynnn01-01.github.io/interactive-resume/"
+           target="_blank"
+           rel="noopener noreferrer">
+          <button class="action secondary"> Visit My Resume Website</button>
+        </a>
+      </p>
+
+      <button class="action secondary" id="restartBtn">
+        ↻ Play Again
+      </button>
+    </div>
+
+    <div class="footer">
+      🏎️
+    </div>
+  </main>
+
+  <script>
+    // EDIT YOUR PERSONAL INFORMATION IN THE STORY FIELDS BELOW.
+
+    const levels = [
+      {
+        name: "LEVEL 1",
+        title: "About Me",
+        question:
+          "Would you like to get to know me better and discover the person behind this resume?",
+        choices: [
+          "Yes! Let's get to know you",
+        ],
+        answer: 0,
+        story: `
+          <h3>🚥</h3>
+          <p>Hi! I'm Ferlyn Tambal Ato, a Bachelor of Science in Computer Engineering student who enjoys
+          learning, exploring new ideas, and discovering opportunities
+          to grow.</p>
+          <p>I believe every experience can teach me something valuable.
+          Whether I'm learning a new skill, exploring a creative idea,
+          or working on a project, I want to keep improving and become
+          a better version of myself.</p>
+          `
+      },
+      {
+        name: "LEVEL 2",
+        title: "Personal Information",
+        question:
+          "Curious about who I am? Would you like to see my basic information and how to connect with me?",
+        choices: [
+          "Show me your profile!",
+        ],
+        answer: 0,
+        story: `
+          <h3>🚥</h3>
+          <p><strong>Full name:</strong> Ferlyn Tambal Ato</p>
+          <p><strong>Location:</strong> Sto. Niño, Parañaque City</p>
+          <p><strong>Email Address:</strong> ferlyntambalato@gmail.com</p>
+          <p><strong>GitHub:</strong>
+          <a href="https://github.com/lynnn01-01"
+          target="_blank" rel="noopener noreferrer">
+          Visit my GitHub profile</a></p>
+        `
+      },
+      {
+        name: "LEVEL 3",
+        title: "Educational Background",
+        question:
+          "Would you like to discover my educational journey and the knowledge I have gained along the way?",
+        choices: [
+          "Tell me about your education!",
+        ],
+        answer: 0,
+        story: `
+          <h3>🚥</h3>
+          <p>I am currently a third-year BSCPE student at
+          Polytechnic University of the Philippines – Parañaque
+          Campus.</p>
+          <p>My educational journey gives me opportunities to gain
+          knowledge, develop new abilities, and learn from different
+          experiences. Every lesson helps me build a stronger
+          foundation for my future.</p>
+          <p>Being a college student also teaches me the importance
+          of patience, dedication, time management, and perseverance.
+          I understand that challenges are part of learning, and I
+          want to use those experiences to improve myself.</p>
+          <p>As I continue my studies, I hope to apply the knowledge
+          I gain to personal projects and future opportunities.</p>
+        `
+      },
+      {
+        name: "LEVEL 4",
+        title: "Skills",
+        question:
+          "Want to know what I can do? Explore the skills I have developed and the things I am learning.",
+        choices: [
+          "Show me your skills!",
+        ],
+        answer: 0,
+        story: `
+          <h3>🚥</h3>
+          <p>I am currently learning HTML and CSS and exploring how
+          these technologies are used to build and style websites.</p>
+          <p>HTML helps me organize website content, while CSS allows
+          me to experiment with colors, layouts, spacing, and design.
+          I'm interested in learning how these elements work together
+          to create engaging online experiences.</p>
+          <p>This interactive resume is one of the projects I use to
+          practice. Building it gives me an opportunity to experiment
+          with a website layout, add interactive questions, and make
+          information more enjoyable to explore.</p>
+          <p>I want to continue improving my coding, creativity,
+          problem-solving, and adaptability. I know I still have a
+          lot to learn, and I'm willing to keep practicing one step
+          at a time. </p>
+        `
+      },
+      {
+        name: "LEVEL 5",
+        title: "Strengths and Qualities",
+        question:
+          "What makes me unique? Discover the personal qualities and strengths that help me grow.",
+        choices: [
+          "Tell me what makes you unique!",
+        ],
+        answer: 0,
+        story: `
+          <h3>🚥</h3>
+          <p>I value learning and staying open to new ideas. I believe
+          curiosity can help me discover opportunities, understand
+          different perspectives, and develop new abilities.</p>
+          <p>I also believe patience and perseverance are important.
+          Learning something unfamiliar can take time, so I want to
+          keep practicing, learn from mistakes, and continue even
+          when a task feels challenging.</p>
+          <p>Creativity is another quality I enjoy exploring,
+          especially when designing projects like this interactive
+          resume. I like finding ways to present information in
+          a fun and interesting format.</p>
+          <p>I'm still growing and discovering my strengths. I hope
+          to become more confident, welcome constructive feedback,
+          and use every experience as an opportunity to improve.</p>
+        `
+      },
+      {
+        name: "LEVEL 6",
+        title: "Hobbies and Interests",
+        question:
+          "Wonder what I enjoy doing in my free time? Take a look at my hobbies, passions, and interests.",
+        choices: [
+          "Tell me what you enjoy!",
+        ],
+        answer: 0,
+        story: `
+          <h3>🚥</h3>
+          <p>I enjoy discovering new ideas and exploring activities
+          that allow me to learn, express myself, and develop my
+          creativity.</p>
+          <p>One of my current interests is web development. I enjoy
+          exploring how websites are made and how different design
+          choices can turn an idea into an interactive experience.</p>
+          <p>Creating this resume is a way for me to experiment with
+          layouts, colors, and interactive features. It lets me
+          combine learning with creativity while developing a
+          project of my own.</p>
+          <p>I'm also open to discovering new hobbies and trying
+          activities that inspire me. I believe exploring different
+          interests helps me learn more about myself and what I
+          enjoy doing.</p>
+        `
+      },
+      {
+        name: "LEVEL 7",
+        title: "Goals and Aspirations",
+        question:
+          "Would you like to know about my dreams, future plans, and the person I aspire to become?",
+        choices: [
+          "Show me your dreams!",
+        ],
+        answer: 0,
+        story: `
+          <h3>🚥</h3>
+          <p>My goal is to continue growing as a student and as an
+          individual while discovering more opportunities to develop
+          my skills.</p>
+          <p>I want to improve my understanding of HTML, CSS, and
+          other technologies so I can create more interactive
+          websites and meaningful projects. I also hope to gain
+          experience and discover opportunities that connect with
+          my interests and abilities.</p>
+          <p>I understand that reaching my goals takes effort,
+          patience, and a willingness to keep learning. Rather than
+          expecting myself to know everything immediately, I want
+          to focus on making progress one step at a time.</p>
+          <p>This interactive resume is one small achievement in
+          my journey, and I hope it will be the beginning of many
+          more projects and opportunities.</p>
+          <h3>QUEST COMPLETE!</h3>
+          <p>Thank you for taking the time to explore my resume.
+          I hope you enjoyed getting to know me!</p>
+          <p><strong>Keep learning, keep creating, and keep
+          believing in your potential. </strong></p>
+          <p>
+            <a href="https://github.com/lynnn01-01"
+            target="_blank" rel="noopener noreferrer">
+            Visit My GitHub Profile</a>
+          </p>
+          <p>
+            <a href="https://lynnn01-01.github.io/interactive-resume/"
+            target="_blank" rel="noopener noreferrer">
+            Visit My Interactive Resume</a>
+          </p>
+        `
+      }
+    ];
+
+    let current = 0;
+    const completed = new Set();
+
+    const levelCount = document.getElementById("levelCount");
+    const progressText = document.getElementById("progressText");
+    const progress = document.getElementById("progress");
+    const levelName = document.getElementById("levelName");
+    const sectionTitle = document.getElementById("sectionTitle");
+    const question = document.getElementById("question");
+    const choices = document.getElementById("choices");
+    const feedback = document.getElementById("feedback");
+    const nextBtn = document.getElementById("nextBtn");
+    const gameArea = document.getElementById("gameArea");
+    const finishArea = document.getElementById("finishArea");
+
+    function renderLevel() {
+      const level = levels[current];
+
+      levelCount.textContent =
+        `Level ${current + 1} of ${levels.length}`;
+
+      const percentage = Math.round(
+        (completed.size / levels.length) * 100
+      );
+
+      progressText.textContent = `${percentage}% complete`;
+      progress.style.width = `${percentage}%`;
+
+      levelName.textContent = level.name;
+      sectionTitle.textContent = level.title;
+      question.textContent = level.question;
+
+      choices.innerHTML = "";
+      feedback.innerHTML = "";
+      nextBtn.classList.add("hidden");
+
+      level.choices.forEach((choice, index) => {
+        const button = document.createElement("button");
+        button.className = "choice";
+        button.textContent = choice;
+        button.addEventListener("click", () => checkAnswer(index));
+        choices.appendChild(button);
+      });
+
+      if (completed.has(current)) {
+        revealStory();
+      }
+    }
+
+    function checkAnswer(selected) {
+      const level = levels[current];
+
+      if (completed.has(current)) {
+        return;
+      }
+
+      if (selected === level.answer) {
+        completed.add(current);
+        revealStory();
+      } else {
+        feedback.innerHTML =
+          "<p>Not quite! Try another answer to unlock this level.</p>";
+      }
+    }
+
+    function revealStory() {
+      const level = levels[current];
+
+      feedback.innerHTML = level.story;
+
+      Array.from(choices.children).forEach(button => {
+        button.disabled = true;
+      });
+
+      const percentage = Math.round(
+        (completed.size / levels.length) * 100
+      );
+
+      progressText.textContent = `${percentage}% complete`;
+      progress.style.width = `${percentage}%`;
+
+      if (current === levels.length - 1) {
+        nextBtn.textContent = "Finish Adventure";
+      } else {
+        nextBtn.textContent = "Next Level";
+      }
+
+      nextBtn.classList.remove("hidden");
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (!completed.has(current)) {
+        return;
+      }
+
+      if (current === levels.length - 1) {
+        gameArea.classList.add("hidden");
+        finishArea.classList.remove("hidden");
+
+        progressText.textContent = "100% complete";
+        progress.style.width = "100%";
+        levelCount.textContent = "Adventure completed!";
+        return;
+      }
+
+      current++;
+      renderLevel();
+    });
+
+    document.getElementById("restartBtn").addEventListener("click", () => {
+      current = 0;
+      completed.clear();
+
+      finishArea.classList.add("hidden");
+      gameArea.classList.remove("hidden");
+
+      renderLevel();
+    });
+
+    document.getElementById("startBtn").addEventListener("click", () => {
+  document.getElementById("welcomeScreen").classList.add("hidden");
+  document.getElementById("gameArea").classList.remove("hidden");
+});
+
+renderLevel();
+  </script>
+</body>
+  </html>
+  
