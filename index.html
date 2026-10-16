@@ -1,0 +1,154 @@
+
+<div id="story-game">
+  <h2>🔐 Unlock My World</h2>
+  <p>Win each level to discover my story!</p>
+
+  <div id="level-buttons"></div>
+  <h3 id="level-title">Level 1</h3>
+  <p id="challenge"></p>
+  <div id="choices"></div>
+  <p id="feedback" aria-live="polite"></p>
+  <div id="reveal"></div>
+</div>
+
+<style>
+  #story-game {
+    background: #f4edff;
+    color: #302448;
+    padding: 22px;
+    border-radius: 20px;
+    text-align: center;
+    margin: 24px 0;
+  }
+
+  #level-buttons button,
+  #choices button {
+    border: 0;
+    border-radius: 12px;
+    padding: 12px;
+    margin: 5px;
+    cursor: pointer;
+    background: #7654cf;
+    color: white;
+  }
+
+  #level-buttons button:disabled {
+    background: #c8c1d5;
+    cursor: not-allowed;
+  }
+
+  #reveal {
+    background: white;
+    padding: 14px;
+    border-radius: 12px;
+    margin-top: 15px;
+  }
+</style>
+
+<script>
+  const levels = [
+    {
+      name: "Level 1: Who Am I?",
+      question: "What do you call a person who loves learning new things?",
+      choices: ["A curious learner", "A sleepy potato", "A robot"],
+      answer: 0,
+      story: "Hi! I'm Ferlyn Tambal Ato. I'm a student who enjoys learning and exploring new ideas."
+    },
+    {
+      name: "Level 2: My Journey",
+      question: "Which section tells people where you study?",
+      choices: ["Education", "Contact", "Hobbies"],
+      answer: 0,
+      story: "MY EDUCATION: I study at Polytechnic University of the Philippines, Parañaque Campus. My current goal is to keep learning and growing."
+    },
+    {
+      name: "Level 3: Skill Quest",
+      question: "Which language is used to structure web pages?",
+      choices: ["HTML", "CSS", "A calculator"],
+      answer: 0,
+      story: "MY SKILLS: I'm learning HTML, CSS, and other skills. I'm excited to build more projects."
+    },
+    {
+      name: "Level 4: Final Treasure",
+      question: "What is a great way to show your work online?",
+      choices: ["Hide it", "Build a portfolio", "Forget it"],
+      answer: 1,
+      story: "QUEST COMPLETE! 🎉 Explore my projects at YOUR GITHUB LINK. Thanks for discovering my story!"
+    }
+  ];
+
+  let unlocked = 0;
+  let current = 0;
+  let completed = [];
+
+  function renderLevels() {
+    const container = document.getElementById("level-buttons");
+    container.innerHTML = "";
+
+    levels.forEach((level, i) => {
+      const btn = document.createElement("button");
+      btn.textContent = completed.includes(i)
+        ? "✅ " + (i + 1)
+        : i <= unlocked ? "🔓 " + (i + 1) : "🔒 " + (i + 1);
+
+      btn.disabled = i > unlocked;
+      btn.onclick = () => {
+        current = i;
+        renderGame();
+      };
+      container.appendChild(btn);
+    });
+  }
+
+  function renderGame() {
+    const level = levels[current];
+    document.getElementById("level-title").textContent = level.name;
+    document.getElementById("challenge").textContent = level.question;
+    document.getElementById("feedback").textContent = "";
+
+    const choices = document.getElementById("choices");
+    choices.innerHTML = "";
+
+    level.choices.forEach((choice, i) => {
+      const btn = document.createElement("button");
+      btn.textContent = choice;
+      btn.onclick = () => checkAnswer(i);
+      choices.appendChild(btn);
+    });
+
+    document.getElementById("reveal").textContent =
+      completed.includes(current) ? level.story : "🏆 Win to reveal this part of my resume!";
+    renderLevels();
+  }
+
+  function checkAnswer(choice) {
+    const feedback = document.getElementById("feedback");
+    const level = levels[current];
+
+    if (choice === level.answer) {
+      completed.push(current);
+      unlocked = Math.max(unlocked, current + 1);
+
+      feedback.textContent = "🎉 Correct! You unlocked a new part of my story!";
+      document.getElementById("reveal").textContent = level.story;
+
+      renderLevels();
+
+      if (current < levels.length - 1) {
+        const next = document.createElement("button");
+        next.textContent = "Next Level ➜";
+        next.onclick = () => {
+          current++;
+          renderGame();
+        };
+        document.getElementById("choices").replaceChildren(next);
+      } else {
+        feedback.textContent = "🌟 Quest complete! You've discovered my story!";
+      }
+    } else {
+      feedback.textContent = "Not quite! Try another answer 💜";
+    }
+  }
+
+  renderGame();
+</script>
