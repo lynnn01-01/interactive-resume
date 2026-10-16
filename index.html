@@ -195,6 +195,36 @@
 
 <body>
   <main class="game">
+    
+<div id="welcomeScreen">
+  <div style="font-size: 45px;">🎀 🌸 💗</div>
+
+  <h1>Welcome to My Interactive Resume!</h1>
+
+  <p>
+    ✨ Hello there! Welcome to my interactive resume!
+  </p>
+
+  <p>
+    Are you ready to get to know me? Explore my personal
+    information, educational background, skills, strengths,
+    hobbies, and future aspirations. Each section will give
+    you a glimpse of who I am, what I enjoy, and what I hope
+    to achieve.
+  </p>
+
+  <p>
+    Click on any section that catches your interest, and
+    let's begin my journey together!
+  </p>
+
+  <h3>Where would you like to start? 💗</h3>
+
+  <button class="action" id="startBtn">
+    Start My Adventure! ♡ →
+  </button>
+</div>
+    
     <div class="heart">🎀 💗 🌸</div>
     <h1>Ferlyn's Resume Adventure</h1>
     <p class="subtitle">
@@ -210,7 +240,7 @@
       <div class="progress" id="progress"></div>
     </div>
 
-    <div id="gameArea">
+    <div id="gameArea" class="hidden">
       <span class="level-tag" id="levelName"></span>
       <h2 id="sectionTitle"></h2>
       <p id="question"></p>
@@ -600,7 +630,12 @@
       renderLevel();
     });
 
-    renderLevel();
+    document.getElementById("startBtn").addEventListener("click", () => {
+  document.getElementById("welcomeScreen").classList.add("hidden");
+  document.getElementById("gameArea").classList.remove("hidden");
+});
+
+renderLevel();
   </script>
 </body>
   </html>
