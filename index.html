@@ -2,539 +2,602 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#fff0f6">
-  <title>Ferlyn | My Interactive Resume</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Creative Resume</title>
 
-  <style>
-    :root {
-      --background: #fff0f6;
-      --pink: #d65d96;
-      --button-pink: #e77dad;
-      --soft-pink: #ffe0ed;
-      --white: #ffffff;
-      --text: #70465a;
-    }
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    * {
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
+<style>
+:root {
+  --yellow: #F7E58A;
+  --aubergine: #542047;
+  --pink: #F48FB1;
+  --white: #FFFDF4;
+  --ink: #28142B;
+}
 
-    body {
-      margin: 0;
-      font-family: "Trebuchet MS", Arial, sans-serif;
-      background: var(--background);
-      color: var(--text);
-      line-height: 1.7;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    a {
-      color: var(--pink);
-      text-decoration: none;
-    }
+body {
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: 'Space Grotesk', sans-serif;
+  transition: .3s;
+}
 
-    a:hover {
-      text-decoration: underline;
-    }
+body.dark {
+  --yellow: #28142B;
+  --aubergine: #F7E58A;
+  --pink: #F48FB1;
+  --white: #542047;
+  --ink: #FFFDF4;
+}
 
-    /* Navigation */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: rgba(255, 240, 246, 0.96);
-      border-bottom: 1px solid #f5c4d8;
-      padding: 12px 16px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px 18px;
-    }
+.container {
+  width: min(1100px, 90%);
+  margin: auto;
+}
 
-    nav a {
-      font-size: 14px;
-      font-weight: bold;
-      color: var(--pink);
-    }
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 0;
+  gap: 15px;
+}
 
-    /* Welcome */
-    .hero {
-      min-height: 85vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 60px 20px;
-      background: linear-gradient(
-        180deg,
-        #fff0f6,
-        #ffe0ed
-      );
-    }
+.logo {
+  font-weight: 700;
+  font-size: 20px;
+}
 
-    .hero .bow {
-      font-size: 48px;
-      margin-bottom: 4px;
-    }
+nav a {
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 600;
+  margin-left: 15px;
+}
 
-    .hero h1 {
-      color: var(--pink);
-      font-size: clamp(34px, 7vw, 56px);
-      margin: 0 0 10px;
-    }
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 700;
+  border: 3px solid var(--ink);
+  background: var(--pink);
+  color: var(--ink);
+  padding: 12px 18px;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: .2s;
+}
 
-    .hero h2 {
-      font-size: clamp(17px, 4vw, 23px);
-      margin: 0 0 16px;
-      font-weight: normal;
-    }
+button:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
 
-    .hero p {
-      max-width: 600px;
-      margin: 0 auto 24px;
-    }
+.hero {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 30px;
+  padding: 65px 0;
+  align-items: center;
+}
 
-    .button {
-      display: inline-block;
-      background: var(--button-pink);
-      color: white;
-      border: none;
-      border-radius: 25px;
-      padding: 12px 24px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 4px 10px #d65d9630;
-    }
+.tag {
+  display: inline-block;
+  background: var(--pink);
+  border: 2px solid var(--ink);
+  padding: 7px 13px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
 
-    .button:hover {
-      background: var(--pink);
-      text-decoration: none;
-      transform: translateY(-2px);
-    }
+h1 {
+  font-size: clamp(45px, 8vw, 85px);
+  line-height: .98;
+  letter-spacing: -5px;
+  margin-bottom: 20px;
+}
 
-    /* General sections */
-    section {
-      padding: 60px 20px;
-      scroll-margin-top: 65px;
-    }
+h1 span {
+  color: var(--aubergine);
+}
 
-    .section-inner {
-      max-width: 900px;
-      margin: 0 auto;
-    }
+.hero p {
+  font-size: 17px;
+  line-height: 1.7;
+  max-width: 550px;
+  margin-bottom: 25px;
+}
 
-    .section-title {
-      color: var(--pink);
-      font-size: clamp(26px, 5vw, 36px);
-      text-align: center;
-      margin: 0 0 12px;
-    }
+.photo-card {
+  background: var(--pink);
+  border: 4px solid var(--ink);
+  padding: 15px;
+  box-shadow: 10px 10px 0 var(--ink);
+  transform: rotate(3deg);
+}
 
-    .section-subtitle {
-      text-align: center;
-      margin: 0 auto 30px;
-      max-width: 650px;
-    }
+.photo-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 3px solid var(--ink);
+}
 
-    .card {
-      background: var(--white);
-      border: 1px solid #f7d0e0;
-      border-radius: 20px;
-      padding: 24px;
-      margin: 18px 0;
-      box-shadow: 0 5px 18px #d65d960d;
-    }
+.photo-card p {
+  font-weight: 700;
+  text-align: center;
+  margin: 12px 0 0;
+}
 
-    .card h3 {
-      color: var(--pink);
-      margin-top: 0;
-    }
+.section {
+  margin: 45px 0;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-    }
+.section-title {
+  font-size: 32px;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
 
-    .grid .card {
-      margin: 0;
-    }
+.card {
+  background: var(--white);
+  border: 3px solid var(--ink);
+  padding: 25px;
+  box-shadow: 7px 7px 0 var(--ink);
+  margin-bottom: 20px;
+}
 
-    .tag {
-      display: inline-block;
-      background: var(--soft-pink);
-      color: var(--pink);
-      border-radius: 20px;
-      padding: 6px 13px;
-      margin: 4px;
-      font-size: 14px;
-    }
+.card h3 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
 
-    ul {
-      padding-left: 22px;
-    }
+.meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  margin-bottom: 12px;
+  color: var(--aubergine);
+}
 
-    /* Alternate section background */
-    .alternate {
-      background: #ffe7f0;
-    }
+.card p, .card li {
+  line-height: 1.7;
+}
 
-    /* Game */
-    .game-card {
-      background: white;
-      border: 2px solid var(--button-pink);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 6px 20px #d65d9615;
-    }
+.card ul {
+  padding-left: 20px;
+  margin-top: 10px;
+}
 
-    .game-heading {
-      padding: 20px;
-      text-align: center;
-      background: var(--soft-pink);
-    }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
 
-    .game-heading h3 {
-      color: var(--pink);
-      margin: 0 0 5px;
-    }
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
 
-    .game-heading p {
-      margin: 0;
-    }
+.skill {
+  padding: 10px 16px;
+  background: var(--pink);
+  border: 2px solid var(--ink);
+  font-weight: 700;
+  box-shadow: 3px 3px 0 var(--ink);
+}
 
-    .game-frame {
-      display: block;
-      width: 100%;
-      height: 850px;
-      border: none;
-      background: var(--background);
-    }
+.project {
+  cursor: pointer;
+  transition: .2s;
+}
 
-    .game-note {
-      padding: 12px 16px;
-      font-size: 13px;
-      text-align: center;
-      background: #fff8fb;
-    }
+.project:hover {
+  transform: rotate(-1deg) translateY(-5px);
+}
 
-    /* Contact and footer */
-    .contact-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 20px;
-    }
+.contact {
+  background: var(--aubergine);
+  color: var(--yellow);
+  padding: 40px;
+  border: 4px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+}
 
-    footer {
-      text-align: center;
-      padding: 28px 16px;
-      color: var(--pink);
-      background: var(--soft-pink);
-    }
+.contact a {
+  color: var(--pink);
+  font-weight: 700;
+}
 
-    @media (max-width: 600px) {
-      nav {
-        gap: 8px 12px;
-      }
+footer {
+  padding: 35px 0;
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+}
 
-      nav a {
-        font-size: 12px;
-      }
+a {
+  text-underline-offset: 4px;
+}
 
-      .grid {
-        grid-template-columns: 1fr;
-      }
+@media(max-width: 700px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
 
-      section {
-        padding: 45px 16px;
-      }
+  .photo-card {
+    max-width: 330px;
+    margin: auto;
+  }
 
-      .card {
-        padding: 20px;
-      }
+  .grid {
+    grid-template-columns: 1fr;
+  }
 
-      .game-frame {
-        height: 850px;
-      }
-    }
-  </style>
+  nav {
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    margin-left: 0;
+    margin-right: 10px;
+  }
+
+  h1 {
+    letter-spacing: -3px;
+  }
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  nav button, .hero button {
+    display: none;
+  }
+
+  .card, .contact {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- NAVIGATION -->
-  <nav aria-label="Main navigation">
-    <a href="#home">Home</a>
-    <a href="#about">About Me</a>
-    <a href="#personal">Personal Info</a>
-    <a href="#education">Education</a>
-    <a href="#skills">Skills</a>
-    <a href="#strengths">Strengths</a>
-    <a href="#hobbies">Hobbies</a>
-    <a href="#goals">Goals</a>
-    <a href="#game">Play My Game</a>
+<div class="container">
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="logo">✳ MY RESUME.</div>
+
+  <div>
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
-  </nav>
+  </div>
 
-  <!-- WELCOME SECTION -->
-  <header class="hero" id="home">
-    <div class="bow">🚥</div>
-    <h1>Hello, I'm Ferlyn!</h1>
-    <h2>Third-Year BSCpE Student</h2>
+  <button onclick="toggleTheme()">☾ Theme</button>
+</nav>
 
+
+<!-- HERO SECTION -->
+<header class="hero">
+
+  <div>
+    <div class="tag">✦ AVAILABLE FOR OPPORTUNITIES</div>
+
+    <!-- CHANGE YOUR NAME HERE -->
+    <h1>HELLO,<br> I'M <span>YOUR NAME.</span></h1>
+
+    <!-- CHANGE YOUR JOB TITLE -->
+    <h2>YOUR PROFESSIONAL TITLE</h2>
+
+    <!-- WRITE YOUR INTRODUCTION -->
     <p>
-      Welcome to my personal portfolio! Scroll down to learn more about me and
-      play my interactive resume game. 
+      Hi! I'm [Your Name], a passionate and creative individual
+      who loves learning, creating, and exploring new opportunities.
+      I enjoy turning ideas into meaningful experiences.
     </p>
 
-    <a class="button" href="#about">
-      Explore My Resume
-    </a>
-  </header>
+    <button onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">
+      LET'S CONNECT ↗
+    </button>
 
-  <main>
+    <button onclick="window.print()">DOWNLOAD RESUME ↓</button>
+  </div>
 
-    <!-- ABOUT ME -->
-    <section id="about">
-      <div class="section-inner">
-        <h2 class="section-title">About Me</h2>
-        <p class="section-subtitle">
-          🏎️
-        </p>
+  <!-- REPLACE WITH YOUR PHOTO URL -->
+  <div class="photo-card">
+    <img src="https://placehold.co/500x500/F48FB1/542047?text=YOUR+PHOTO"
+         alt="Your profile photo">
+    <p>★ THAT'S ME!</p>
+  </div>
 
-        <div class="card">
-          <h3>Hi there!</h3>
-          <p>
-            I am a third-year Bachelor of Science in Computer
-            Engineering student. I enjoy learning new things,
-            exploring creative ideas, and improving my skills.
-            I am continuing to grow as a student and look
-            forward to gaining more knowledge and experience
-            in technology.
-          </p>
-        </div>
-      </div>
-    </section>
+</header>
 
-    <!-- PERSONAL INFORMATION -->
-    <section class="alternate" id="personal">
-      <div class="section-inner">
-        <h2 class="section-title">Personal Information</h2>
-        <p class="section-subtitle">
-          🏎️
-        </p>
 
-        <div class="card">
-          <p><strong>Full Name:</strong> Ferlyn Tambal Ato</p>
-          <p><strong>Date of Birth:</strong> September 1, 2003</p>
-          <p><strong>Citizenship:</strong> Filipino</p>
-          <p><strong>Career Goal:</strong> To develop my skills, gain experience, and explore opportunities for personal and professional growth.</p>
-        </div>
-      </div>
-    </section>
+<!-- ABOUT ME -->
+<section class="section" id="about">
 
-    <!-- EDUCATION -->
-    <section id="education">
-      <div class="section-inner">
-        <h2 class="section-title">Educational Background</h2>
-        <p class="section-subtitle">
-          🏎️
-        </p>
+  <h2 class="section-title">01. ABOUT ME ✳</h2>
 
-        <div class="card">
-          <h3>College</h3>
-          <p><strong>Polytechnic University of the Philippines – Parañaque Campus</strong></p>
-          <p>Bachelor of Science in Computer Engineering</p>
-          <p>Third-Year Student</p>
-        </div>
+  <div class="card">
+    <h3>A LITTLE ABOUT MYSELF...</h3>
 
-        <div class="card">
-          <h3>My Learning Journey</h3>
-          <p>
-            I continue to build my knowledge in computer
-            engineering while exploring programming, web
-            development, and other areas of technology.
-          </p>
-        </div>
-      </div>
-    </section>
+    <p>
+      [Write about yourself here. Include your background,
+      personality, interests, passions, career goals, and
+      what makes you unique.]
+    </p>
 
-    <!-- SKILLS -->
-    <section class="alternate" id="skills">
-      <div class="section-inner">
-        <h2 class="section-title">Skills</h2>
-        <p class="section-subtitle">
-          🏎️
-        </p>
+    <br>
 
-        <div class="card">
-          <h3>Technical Skills</h3>
-          <span class="tag">HTML</span>
-          <span class="tag">CSS</span>
-          <span class="tag">GitHub</span>
-          <span class="tag">Responsive Web Design</span>
-          <p>
-            I am continuing to improve my coding skills
-            through practice and personal projects.
-          </p>
-        </div>
+    <p><b>Location:</b> [Your City, Country]</p>
+    <p><b>Nationality:</b> [Your Nationality]</p>
+    <p><b>Languages:</b> [Language 1, Language 2]</p>
+    <p><b>Interests:</b> [Your hobbies and interests]</p>
+  </div>
 
-        <div class="card">
-          <h3>Learning Next</h3>
-          <span class="tag">JavaScript</span>
-          <span class="tag">Interactive Websites</span>
-          <span class="tag">Web Development</span>
-        </div>
-      </div>
-    </section>
+</section>
 
-    <!-- STRENGTHS -->
-    <section id="strengths">
-      <div class="section-inner">
-        <h2 class="section-title">Strengths and Qualities</h2>
-        <p class="section-subtitle">
-          🏎️
-        </p>
 
-        <div class="grid">
-          <div class="card">
-            <h3>Willingness to Learn</h3>
-            <p>I am open to learning new things and improving myself.</p>
-          </div>
+<!-- WORK EXPERIENCE -->
+<section class="section" id="experience">
 
-          <div class="card">
-            <h3>Creativity</h3>
-            <p>I enjoy exploring ideas and creating projects.</p>
-          </div>
+  <h2 class="section-title">02. WORK EXPERIENCE ✳</h2>
 
-          <div class="card">
-            <h3>Patience</h3>
-            <p>I try to work through challenges and learn from mistakes.</p>
-          </div>
+  <!-- COPY THIS CARD FOR MORE JOBS -->
+  <div class="card">
 
-          <div class="card">
-            <h3>Determination</h3>
-            <p>I aim to keep growing and working toward my goals.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <h3>[Your Job Position]</h3>
 
-    <!-- HOBBIES -->
-    <section class="alternate" id="hobbies">
-      <div class="section-inner">
-        <h2 class="section-title">Hobbies and Interests</h2>
-        <p class="section-subtitle">
-          🏎️
-        </p>
+    <div class="meta">
+      [Company Name] | [Start Date - End Date]
+    </div>
 
-        <div class="card">
-          <ul>
-            <li>Learning new things about technology</li>
-            <li>Exploring creative ideas</li>
-            <li>Creating and improving personal projects</li>
-            <li>Discovering new ways to develop my skills</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+    <p>
+      [Describe your job, role, and responsibilities.]
+    </p>
 
-    <!-- GOALS -->
-    <section id="goals">
-      <div class="section-inner">
-        <h2 class="section-title">Goals and Aspirations</h2>
-        <p class="section-subtitle">
-          🏎️
-        </p>
+    <ul>
+      <li>[Responsibility or accomplishment #1]</li>
+      <li>[Responsibility or accomplishment #2]</li>
+      <li>[Responsibility or accomplishment #3]</li>
+    </ul>
 
-        <div class="card">
-          <ul>
-            <li>Improve my programming and web development skills.</li>
-            <li>Learn JavaScript and create more interactive websites.</li>
-            <li>Build more projects for my portfolio.</li>
-            <li>Gain knowledge and practical experience in my field.</li>
-            <li>Continue growing as a Computer Engineering student.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+  </div>
 
-    <!-- EMBEDDED GAME -->
-    <section class="alternate" id="game">
-      <div class="section-inner">
-        <h2 class="section-title">🎮</h2>
+  <div class="card">
 
-        <p class="section-subtitle">
-          Ready to explore my resume in a fun way?
-          Play my interactive resume game below!
-        </p>
+    <h3>[Previous Job Position]</h3>
 
-        <div class="game-card">
-          <div class="game-heading">
-            <h3>My Interactive Resume</h3>
-            <p>Explore my journey, one level at a time!</p>
-          </div>
+    <div class="meta">
+      [Previous Company] | [Start Date - End Date]
+    </div>
 
-          <iframe
-            class="game-frame"
-            src="game.html"
-            title="Ferlyn's Interactive Resume Game"
-            loading="lazy"
-          ></iframe>
+    <p>
+      [Write your previous work experience here.]
+    </p>
 
-          <div class="game-note">
-            If the game looks cut off, scroll inside the game
-            area.
-          </div>
-        </div>
-      </div>
-    </section>
+  </div>
 
-    <!-- CONTACT -->
-    <section id="contact">
-      <div class="section-inner">
-        <h2 class="section-title">Let's Connect!</h2>
-        <p class="section-subtitle">
-          Thank you for visiting my portfolio!
-          Feel free to explore my projects on GitHub.
-        </p>
+</section>
 
-        <div class="contact-links">
-          <a
-            class="button"
-            href="https://github.com/lynnn01-01"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Visit My GitHub
-          </a>
 
-          <a
-            class="button"
-            href="https://github.com/lynnn01-01/interactive-resume"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View My Project
-          </a>
-        </div>
-      </div>
-    </section>
+<!-- EDUCATION -->
+<section class="section" id="education">
 
-  </main>
+  <h2 class="section-title">03. EDUCATION ✳</h2>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>🏁</p>
-    <p>© 2026 Ferlyn | My Interactive Resume</p>
-    <a href="#home">Back to Top</a>
-  </footer>
+  <div class="card">
+
+    <h3>[Your Degree / Course / Strand]</h3>
+
+    <div class="meta">
+      [School / University] | [Year]
+    </div>
+
+    <p>
+      [Add relevant information about your education,
+      academic background, and specializations.]
+    </p>
+
+  </div>
+
+  <div class="card">
+
+    <h3>[Additional Education / Certification]</h3>
+
+    <div class="meta">
+      [Institution] | [Year]
+    </div>
+
+    <p>[Description or details]</p>
+
+  </div>
+
+</section>
+
+
+<!-- SKILLS -->
+<section class="section" id="skills">
+
+  <h2 class="section-title">04. MY SKILLS ✳</h2>
+
+  <div class="card">
+
+    <h3>THINGS I'M GOOD AT:</h3>
+
+    <div class="skills">
+
+      <!-- REPLACE THESE WITH YOUR OWN SKILLS -->
+
+      <span class="skill">Communication</span>
+      <span class="skill">Teamwork</span>
+      <span class="skill">Leadership</span>
+      <span class="skill">Problem Solving</span>
+      <span class="skill">Creativity</span>
+      <span class="skill">Time Management</span>
+      <span class="skill">[Your Skill]</span>
+      <span class="skill">[Your Skill]</span>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+
+  <h2 class="section-title">05. MY PROJECTS ✳</h2>
+
+  <div class="grid">
+
+    <div class="card project"
+         onclick="window.open('https://example.com','_blank')">
+
+      <div class="tag">PROJECT 01</div>
+
+      <h3>[Project Name]</h3>
+
+      <p>
+        [Describe your project, your role, and what you accomplished.]
+      </p>
+
+      <br>
+      <b>VIEW PROJECT ↗</b>
+
+    </div>
+
+
+    <div class="card project"
+         onclick="window.open('https://example.com','_blank')">
+
+      <div class="tag">PROJECT 02</div>
+
+      <h3>[Project Name]</h3>
+
+      <p>
+        [Describe another project, school activity, or personal work.]
+      </p>
+
+      <br>
+      <b>VIEW PROJECT ↗</b>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ACHIEVEMENTS -->
+<section class="section" id="achievements">
+
+  <h2 class="section-title">06. ACHIEVEMENTS & AWARDS ✳</h2>
+
+  <div class="card">
+
+    <ul>
+      <li>[Award / Recognition] — [Year]</li>
+      <li>[Competition / Achievement] — [Year]</li>
+      <li>[Certificate / Training] — [Year]</li>
+      <li>[Organization / Volunteer Work]</li>
+    </ul>
+
+  </div>
+
+</section>
+
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+
+  <div class="contact">
+
+    <div class="tag">✦ LET'S WORK TOGETHER</div>
+
+    <h2 style="font-size:40px; margin-bottom:15px;">
+      LET'S MAKE<br> SOMETHING GREAT!
+    </h2>
+
+    <p>
+      Have an opportunity or want to collaborate?
+      Feel free to reach out!
+    </p>
+
+    <br>
+
+    <!-- REPLACE WITH YOUR CONTACT DETAILS -->
+
+    <p>EMAIL:
+      <a href="mailto:your@email.com">your@email.com</a>
+    </p>
+
+    <p>LINKEDIN:
+      <a href="https://linkedin.com/in/yourusername">
+        Your LinkedIn
+      </a>
+    </p>
+
+    <p>INSTAGRAM:
+      <a href="https://instagram.com/yourusername">
+        Your Instagram
+      </a>
+    </p>
+
+    <br>
+
+    <button onclick="copyEmail()">
+      COPY MY EMAIL ✉
+    </button>
+
+  </div>
+
+</section>
+
+
+<footer>
+  MADE WITH ♡ BY [YOUR NAME] — © 2026
+</footer>
+
+</div>
+
+
+<!-- INTERACTIVE JAVASCRIPT -->
+<script>
+
+// DARK / LIGHT THEME SWITCH
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+}
+
+// COPY EMAIL BUTTON
+function copyEmail() {
+  navigator.clipboard.writeText('your@email.com')
+    .then(() => alert('Email copied!'));
+}
+
+</script>
 
 </body>
 </html>
+
+
+      
