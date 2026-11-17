@@ -1,19 +1,20 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Creative Resume</title>
+<title>My Creative Resume ✳</title>
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 :root {
   --yellow: #F7E58A;
   --aubergine: #542047;
   --pink: #F48FB1;
-  --white: #FFFDF4;
+  --cream: #FFFDF4;
   --ink: #28142B;
 }
 
@@ -23,10 +24,13 @@
   box-sizing: border-box;
 }
 
+html { scroll-behavior: smooth; }
+
 body {
   background: var(--yellow);
   color: var(--ink);
   font-family: 'Space Grotesk', sans-serif;
+  overflow-x: hidden;
   transition: .3s;
 }
 
@@ -34,146 +38,255 @@ body.dark {
   --yellow: #28142B;
   --aubergine: #F7E58A;
   --pink: #F48FB1;
-  --white: #542047;
+  --cream: #542047;
   --ink: #FFFDF4;
 }
+
+button, a { font-family: inherit; }
+button { cursor: pointer; }
 
 .container {
   width: min(1100px, 90%);
   margin: auto;
 }
 
+/* NAVIGATION */
+
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 25px 0;
+  flex-wrap: wrap;
   gap: 15px;
+  padding: 23px 0;
 }
 
 .logo {
-  font-weight: 700;
   font-size: 20px;
+  font-weight: 800;
 }
 
-nav a {
+.navlinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.navlinks a {
   text-decoration: none;
   color: var(--ink);
-  font-weight: 600;
-  margin-left: 15px;
+  font-size: 12px;
+  font-weight: 800;
 }
 
-button {
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 700;
-  border: 3px solid var(--ink);
+.navlinks a:hover { color: var(--pink); }
+
+/* BUTTONS */
+
+.btn {
   background: var(--pink);
   color: var(--ink);
-  padding: 12px 18px;
+  border: 3px solid var(--ink);
+  padding: 12px 17px;
+  font-weight: 800;
   box-shadow: 4px 4px 0 var(--ink);
   transition: .2s;
+  margin: 4px 4px 8px 0;
 }
 
-button:hover {
-  transform: translate(3px, 3px);
+.btn:hover {
+  transform: translate(3px,3px);
   box-shadow: 1px 1px 0 var(--ink);
 }
 
+/* HERO */
+
 .hero {
+  min-height: 560px;
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 30px;
-  padding: 65px 0;
+  grid-template-columns: 1.4fr 1fr;
   align-items: center;
+  gap: 45px;
+  padding: 60px 0;
 }
 
 .tag {
   display: inline-block;
   background: var(--pink);
   border: 2px solid var(--ink);
-  padding: 7px 13px;
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
+  padding: 7px 12px;
+  font: 12px 'DM Mono', monospace;
   margin-bottom: 20px;
 }
 
-h1 {
-  font-size: clamp(45px, 8vw, 85px);
-  line-height: .98;
-  letter-spacing: -5px;
+.hero h1 {
+  font-size: clamp(50px, 9vw, 95px);
+  line-height: .95;
+  letter-spacing: -6px;
   margin-bottom: 20px;
 }
 
-h1 span {
-  color: var(--aubergine);
-}
+.hero h1 span { color: var(--aubergine); }
+
+.hero h2 { margin-bottom: 15px; }
 
 .hero p {
-  font-size: 17px;
-  line-height: 1.7;
-  max-width: 550px;
-  margin-bottom: 25px;
+  line-height: 1.8;
+  max-width: 540px;
+  margin-bottom: 22px;
 }
 
-.photo-card {
+/* DRAGGABLE PHOTO */
+
+.photo {
   background: var(--pink);
   border: 4px solid var(--ink);
   padding: 15px;
   box-shadow: 10px 10px 0 var(--ink);
-  transform: rotate(3deg);
+  transform: translate(var(--drag-x, 0px), var(--drag-y, 0px)) rotate(3deg);
+  position: relative;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  z-index: 2;
 }
 
-.photo-card img {
+.photo.dragging {
+  cursor: grabbing;
+  box-shadow: 15px 15px 0 var(--ink);
+  z-index: 20;
+}
+
+.photo img {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
   border: 3px solid var(--ink);
+  pointer-events: none;
 }
 
-.photo-card p {
-  font-weight: 700;
-  text-align: center;
-  margin: 12px 0 0;
+.sticker {
+  position: absolute;
+  top: -25px;
+  right: -25px;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  padding: 15px;
+  font-weight: 800;
+  transform: rotate(12deg);
+  animation: float 3s infinite ease-in-out;
+  pointer-events: none;
 }
 
-.section {
-  margin: 45px 0;
+@keyframes float {
+  50% { transform: translateY(-10px) rotate(18deg); }
 }
+
+/* MARQUEE */
+
+.marquee {
+  overflow: hidden;
+  background: var(--aubergine);
+  color: var(--yellow);
+  border-top: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+  padding: 18px 0;
+  margin: 25px 0;
+  white-space: nowrap;
+}
+
+.marquee-track {
+  display: inline-flex;
+  gap: 35px;
+  animation: marqueeMove 22s linear infinite;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marqueeMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* FLOATING STICKERS */
+
+.sticker-zone {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 25px 0;
+}
+
+.floating-sticker {
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  padding: 17px;
+  font-weight: 800;
+  cursor: pointer;
+  user-select: none;
+  transition: .25s;
+}
+
+.floating-sticker:nth-child(1) {
+  background: var(--pink);
+  transform: rotate(-5deg);
+}
+
+.floating-sticker:nth-child(2) {
+  background: var(--cream);
+  transform: rotate(4deg);
+}
+
+.floating-sticker:nth-child(3) {
+  background: var(--aubergine);
+  color: var(--yellow);
+  transform: rotate(-3deg);
+}
+
+.floating-sticker:hover {
+  transform: translateY(-8px) rotate(5deg) scale(1.1);
+}
+
+.floating-sticker.bounce {
+  animation: stickerBounce .5s ease;
+}
+
+@keyframes stickerBounce {
+  50% { transform: rotate(15deg) scale(1.3); }
+}
+
+/* SECTIONS */
+
+section { padding: 55px 0; }
 
 .section-title {
-  font-size: 32px;
-  margin-bottom: 20px;
-  letter-spacing: -1px;
+  font-size: clamp(28px, 5vw, 40px);
+  letter-spacing: -2px;
+  margin-bottom: 25px;
 }
 
 .card {
-  background: var(--white);
+  background: var(--cream);
   border: 3px solid var(--ink);
-  padding: 25px;
+  padding: 24px;
   box-shadow: 7px 7px 0 var(--ink);
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
-.card h3 {
-  font-size: 22px;
-  margin-bottom: 8px;
-}
+.card h3 { margin-bottom: 10px; }
+
+.card p { line-height: 1.8; }
 
 .meta {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  margin-bottom: 12px;
+  font: 12px 'DM Mono', monospace;
   color: var(--aubergine);
-}
-
-.card p, .card li {
-  line-height: 1.7;
-}
-
-.card ul {
-  padding-left: 20px;
-  margin-top: 10px;
+  margin-bottom: 12px;
 }
 
 .grid {
@@ -182,6 +295,51 @@ h1 span {
   gap: 20px;
 }
 
+/* ABOUT CARDS */
+
+.fun-card {
+  cursor: pointer;
+  min-height: 140px;
+  transition: .25s;
+}
+
+.fun-card:hover {
+  transform: rotate(-2deg) scale(1.02);
+  background: var(--pink);
+}
+
+.fun-card .answer { display: none; margin-top: 15px; }
+
+.fun-card.open .answer { display: block; }
+
+/* TIMELINE */
+
+.timeline-item {
+  border-left: 5px solid var(--aubergine);
+  padding: 0 0 22px 20px;
+  margin-left: 10px;
+}
+
+.timeline-button {
+  background: var(--pink);
+  border: 2px solid var(--ink);
+  padding: 14px;
+  width: 100%;
+  text-align: left;
+  font-weight: 800;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.timeline-details {
+  display: none;
+  padding: 18px 5px;
+  line-height: 1.8;
+}
+
+.timeline-item.open .timeline-details { display: block; }
+
+/* SKILLS */
+
 .skills {
   display: flex;
   flex-wrap: wrap;
@@ -189,21 +347,136 @@ h1 span {
 }
 
 .skill {
-  padding: 10px 16px;
   background: var(--pink);
   border: 2px solid var(--ink);
-  font-weight: 700;
+  padding: 10px 16px;
+  font-weight: 800;
   box-shadow: 3px 3px 0 var(--ink);
-}
-
-.project {
-  cursor: pointer;
   transition: .2s;
 }
 
-.project:hover {
-  transform: rotate(-1deg) translateY(-5px);
+.skill:hover, .skill.active {
+  background: var(--aubergine);
+  color: var(--yellow);
+  transform: translateY(-4px);
 }
+
+.skill-info {
+  margin-top: 22px;
+  padding: 18px;
+  border: 2px dashed var(--ink);
+  min-height: 65px;
+  line-height: 1.7;
+}
+
+/* PROFICIENCY BARS */
+
+.progress {
+  background: var(--pink);
+  border: 2px solid var(--ink);
+  height: 17px;
+  margin: 10px 0 20px;
+}
+
+.progress-fill {
+  background: var(--aubergine);
+  height: 100%;
+  width: 0;
+  transition: width 1.5s ease;
+}
+
+/* PROJECTS */
+
+.project {
+  cursor: pointer;
+  transition: .25s;
+}
+
+.project:hover {
+  transform: translateY(-7px) rotate(-1deg);
+  background: var(--pink);
+}
+
+.project-number {
+  font: 12px 'DM Mono', monospace;
+  margin-bottom: 12px;
+}
+
+/* MODAL */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(30,10,30,.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal.show { display: flex; }
+
+.modal-content {
+  width: min(500px, 100%);
+  background: var(--yellow);
+  color: var(--ink);
+  border: 4px solid var(--ink);
+  padding: 30px;
+  box-shadow: 9px 9px 0 var(--pink);
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: var(--pink);
+  border: 2px solid var(--ink);
+  padding: 6px 12px;
+  font-weight: 800;
+}
+
+/* ASK ME ANYTHING */
+
+.question-card {
+  border: 3px solid var(--ink);
+  background: var(--cream);
+  box-shadow: 5px 5px 0 var(--ink);
+  margin-bottom: 15px;
+}
+
+.question-card summary {
+  list-style: none;
+  padding: 20px;
+  cursor: pointer;
+  font-weight: 800;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.question-card summary::-webkit-details-marker { display: none; }
+
+.question-card summary::after {
+  content: '+';
+  font-size: 23px;
+}
+
+.question-card[open] summary::after { content: '−'; }
+
+.question-answer {
+  padding: 0 20px 20px;
+  line-height: 1.8;
+  animation: answerReveal .3s ease;
+}
+
+@keyframes answerReveal {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* CONTACT */
 
 .contact {
   background: var(--aubergine);
@@ -213,60 +486,93 @@ h1 span {
   box-shadow: 8px 8px 0 var(--ink);
 }
 
-.contact a {
-  color: var(--pink);
-  font-weight: 700;
+.contact a { color: var(--pink); }
+.contact p { margin: 12px 0; }
+
+/* SCROLL REVEAL */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: .7s;
 }
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* MOUSE TRAIL */
+
+.cursor-star {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  color: var(--pink);
+  font-size: 19px;
+  animation: starFade .75s ease-out forwards;
+}
+
+@keyframes starFade {
+  0% { opacity: 1; transform: scale(1) rotate(0); }
+  100% {
+    opacity: 0;
+    transform: translateY(-35px) scale(.2) rotate(130deg);
+  }
+}
+
+/* BACK TO TOP */
+
+#topBtn {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  display: none;
+  z-index: 50;
+  border: 3px solid var(--ink);
+  background: var(--pink);
+  padding: 14px;
+  font-size: 18px;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+/* FOOTER */
 
 footer {
-  padding: 35px 0;
   text-align: center;
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
+  padding: 40px 0;
+  font: 12px 'DM Mono', monospace;
 }
 
-a {
-  text-underline-offset: 4px;
+/* RESPONSIVE */
+
+@media(max-width:700px) {
+  .hero { grid-template-columns: 1fr; }
+  .photo { max-width: 320px; margin: 20px auto; }
+  .grid { grid-template-columns: 1fr; }
+  .hero h1 { letter-spacing: -3px; }
+  nav { align-items: flex-start; }
+  .contact { padding: 25px; }
+  .marquee-track { font-size: 16px; }
+  .floating-sticker { padding: 12px; font-size: 13px; }
 }
 
-@media(max-width: 700px) {
-  .hero {
-    grid-template-columns: 1fr;
-  }
-
-  .photo-card {
-    max-width: 330px;
-    margin: auto;
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  nav {
-    flex-wrap: wrap;
-  }
-
-  nav a {
-    margin-left: 0;
-    margin-right: 10px;
-  }
-
-  h1 {
-    letter-spacing: -3px;
+@media(prefers-reduced-motion:reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
   }
 }
 
 @media print {
-  body {
-    background: white !important;
-    color: black !important;
+  body { background: white; color: black; }
+  nav, button, #topBtn, .marquee, .sticker-zone {
+    display: none !important;
   }
-
-  nav button, .hero button {
-    display: none;
+  .reveal { opacity: 1; transform: none; }
+  .timeline-details, .fun-card .answer {
+    display: block;
   }
-
   .card, .contact {
     box-shadow: none;
     break-inside: avoid;
@@ -281,117 +587,199 @@ a {
 
 <!-- NAVIGATION -->
 <nav>
-  <div class="logo">✳ MY RESUME.</div>
+  <div class="logo">✳ THE CREATIVE FILE</div>
 
-  <div>
-    <a href="#about">About</a>
-    <a href="#experience">Experience</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
+  <div class="navlinks">
+    <a href="#about">ABOUT</a>
+    <a href="#experience">EXPERIENCE</a>
+    <a href="#skills">SKILLS</a>
+    <a href="#projects">PROJECTS</a>
+    <a href="#questions">ASK ME</a>
+    <a href="#contact">CONTACT</a>
   </div>
 
-  <button onclick="toggleTheme()">☾ Theme</button>
+  <button class="btn" onclick="toggleTheme()">☾ THEME</button>
 </nav>
 
 
-<!-- HERO SECTION -->
+<!-- HERO -->
 <header class="hero">
 
   <div>
-    <div class="tag">✦ AVAILABLE FOR OPPORTUNITIES</div>
+    <div class="tag">✦ OPEN TO OPPORTUNITIES</div>
 
-    <!-- CHANGE YOUR NAME HERE -->
-    <h1>HELLO,<br> I'M <span>YOUR NAME.</span></h1>
+    <!-- EDIT YOUR NAME -->
+    <h1>HEY,<br>I'M <span>YOUR NAME.</span></h1>
 
-    <!-- CHANGE YOUR JOB TITLE -->
+    <!-- EDIT YOUR PROFESSION -->
     <h2>YOUR PROFESSIONAL TITLE</h2>
 
-    <!-- WRITE YOUR INTRODUCTION -->
     <p>
-      Hi! I'm [Your Name], a passionate and creative individual
-      who loves learning, creating, and exploring new opportunities.
-      I enjoy turning ideas into meaningful experiences.
+      Hi! I'm [Your Name]. I'm a passionate individual
+      who loves creating, learning, and exploring new
+      opportunities. Welcome to my little corner of the internet!
     </p>
 
-    <button onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">
-      LET'S CONNECT ↗
+    <button class="btn"
+      onclick="document.querySelector('#about').scrollIntoView({behavior:'smooth'})">
+      GET TO KNOW ME ↘
     </button>
 
-    <button onclick="window.print()">DOWNLOAD RESUME ↓</button>
+    <button class="btn" onclick="window.print()">
+      PRINT RESUME ↓
+    </button>
   </div>
 
-  <!-- REPLACE WITH YOUR PHOTO URL -->
-  <div class="photo-card">
+  <!-- CHANGE YOUR PROFILE PHOTO URL -->
+  <div class="photo" id="draggablePhoto">
     <img src="https://placehold.co/500x500/F48FB1/542047?text=YOUR+PHOTO"
-         alt="Your profile photo">
-    <p>★ THAT'S ME!</p>
+         alt="My profile photo">
+    <div class="sticker">THAT'S<br>ME! ★</div>
   </div>
 
 </header>
 
 
-<!-- ABOUT ME -->
-<section class="section" id="about">
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>✳ CREATIVE THINKER</span>
+    <span>♡ ALWAYS LEARNING</span>
+    <span>✦ DREAM BIG</span>
+    <span>★ LET'S CREATE</span>
+    <span>✳ CREATIVE THINKER</span>
+    <span>♡ ALWAYS LEARNING</span>
+    <span>✦ DREAM BIG</span>
+    <span>★ LET'S CREATE</span>
+  </div>
+</div>
 
-  <h2 class="section-title">01. ABOUT ME ✳</h2>
 
-  <div class="card">
-    <h3>A LITTLE ABOUT MYSELF...</h3>
+<!-- FLOATING STICKERS -->
+<div class="sticker-zone">
 
-    <p>
-      [Write about yourself here. Include your background,
-      personality, interests, passions, career goals, and
-      what makes you unique.]
-    </p>
-
-    <br>
-
-    <p><b>Location:</b> [Your City, Country]</p>
-    <p><b>Nationality:</b> [Your Nationality]</p>
-    <p><b>Languages:</b> [Language 1, Language 2]</p>
-    <p><b>Interests:</b> [Your hobbies and interests]</p>
+  <div class="floating-sticker" onclick="playSticker(this)">
+    ✿ CREATIVE SOUL
   </div>
 
+  <div class="floating-sticker" onclick="playSticker(this)">
+    ★ BIG DREAMER
+  </div>
+
+  <div class="floating-sticker" onclick="playSticker(this)">
+    ♡ WORK IN PROGRESS
+  </div>
+
+</div>
+
+
+<!-- ABOUT -->
+<section id="about" class="reveal">
+
+  <h2 class="section-title">01. WHO AM I? ✳</h2>
+
+  <div class="card">
+    <h3>A LITTLE INTRODUCTION</h3>
+
+    <p>
+      [Write your personal introduction here.
+      Talk about your personality, background,
+      passions and goals.]
+    </p>
+  </div>
+
+  <h3 style="margin:25px 0 15px">
+    CLICK TO DISCOVER MORE ABOUT ME ↓
+  </h3>
+
+  <div class="grid">
+
+    <div class="card fun-card" onclick="this.classList.toggle('open')">
+      <h3>♡ MY PERSONALITY</h3>
+      <p>Click to reveal +</p>
+      <div class="answer">
+        [Describe your personality, values and characteristics.]
+      </div>
+    </div>
+
+    <div class="card fun-card" onclick="this.classList.toggle('open')">
+      <h3>✿ MY HOBBIES</h3>
+      <p>Click to reveal +</p>
+      <div class="answer">
+        [Write about your hobbies and interests.]
+      </div>
+    </div>
+
+    <div class="card fun-card" onclick="this.classList.toggle('open')">
+      <h3>★ MY GOALS</h3>
+      <p>Click to reveal +</p>
+      <div class="answer">
+        [Write about your personal and career goals.]
+      </div>
+    </div>
+
+    <div class="card fun-card" onclick="this.classList.toggle('open')">
+      <h3>☻ FUN FACTS</h3>
+      <p>Click to reveal +</p>
+      <div class="answer">
+        [Add interesting facts about yourself.]
+      </div>
+    </div>
+
+  </div>
 </section>
 
 
-<!-- WORK EXPERIENCE -->
-<section class="section" id="experience">
+<!-- EXPERIENCE -->
+<section id="experience" class="reveal">
 
-  <h2 class="section-title">02. WORK EXPERIENCE ✳</h2>
+  <h2 class="section-title">02. MY JOURNEY ✳</h2>
 
-  <!-- COPY THIS CARD FOR MORE JOBS -->
-  <div class="card">
+  <p style="margin-bottom:25px">
+    CLICK EACH ITEM TO EXPLORE MY JOURNEY ↓
+  </p>
 
-    <h3>[Your Job Position]</h3>
+  <div class="timeline-item">
 
-    <div class="meta">
-      [Company Name] | [Start Date - End Date]
+    <button class="timeline-button" onclick="toggleTimeline(this)">
+      ✦ [YOUR JOB POSITION] — [2024–2025] +
+    </button>
+
+    <div class="timeline-details">
+      <b>[Company Name]</b>
+      <p>[Describe your responsibilities and achievements.]</p>
+      <ul>
+        <li>[Responsibility 1]</li>
+        <li>[Responsibility 2]</li>
+        <li>[Achievement]</li>
+      </ul>
     </div>
-
-    <p>
-      [Describe your job, role, and responsibilities.]
-    </p>
-
-    <ul>
-      <li>[Responsibility or accomplishment #1]</li>
-      <li>[Responsibility or accomplishment #2]</li>
-      <li>[Responsibility or accomplishment #3]</li>
-    </ul>
 
   </div>
 
-  <div class="card">
+  <div class="timeline-item">
 
-    <h3>[Previous Job Position]</h3>
+    <button class="timeline-button" onclick="toggleTimeline(this)">
+      ✦ [YOUR PREVIOUS EXPERIENCE] — [2023–2024] +
+    </button>
 
-    <div class="meta">
-      [Previous Company] | [Start Date - End Date]
+    <div class="timeline-details">
+      <b>[Company / Organization]</b>
+      <p>[Describe what you learned and accomplished.]</p>
     </div>
 
-    <p>
-      [Write your previous work experience here.]
-    </p>
+  </div>
+
+  <div class="timeline-item">
+
+    <button class="timeline-button" onclick="toggleTimeline(this)">
+      ✦ MY EDUCATION — [YEAR] +
+    </button>
+
+    <div class="timeline-details">
+      <b>[School / University]</b>
+      <p>[Course, degree, awards and activities.]</p>
+    </div>
 
   </div>
 
@@ -399,63 +787,110 @@ a {
 
 
 <!-- EDUCATION -->
-<section class="section" id="education">
+<section id="education" class="reveal">
 
-  <h2 class="section-title">03. EDUCATION ✳</h2>
+  <h2 class="section-title">03. MY EDUCATION ✳</h2>
 
   <div class="card">
-
-    <h3>[Your Degree / Course / Strand]</h3>
-
-    <div class="meta">
-      [School / University] | [Year]
-    </div>
-
-    <p>
-      [Add relevant information about your education,
-      academic background, and specializations.]
-    </p>
-
+    <h3>[YOUR DEGREE / COURSE / STRAND]</h3>
+    <div class="meta">[SCHOOL NAME] | [YEAR]</div>
+    <p>[Add your educational background and relevant details.]</p>
   </div>
 
   <div class="card">
-
-    <h3>[Additional Education / Certification]</h3>
-
-    <div class="meta">
-      [Institution] | [Year]
-    </div>
-
-    <p>[Description or details]</p>
-
+    <h3>[CERTIFICATION / TRAINING]</h3>
+    <div class="meta">[INSTITUTION] | [YEAR]</div>
+    <p>[Add additional education or training.]</p>
   </div>
 
 </section>
 
 
 <!-- SKILLS -->
-<section class="section" id="skills">
+<section id="skills" class="reveal">
 
-  <h2 class="section-title">04. MY SKILLS ✳</h2>
+  <h2 class="section-title">04. MY SKILL PLAYGROUND ✳</h2>
+
+  <p style="margin-bottom:20px">
+    Click a skill to discover what I can do!
+  </p>
+
+  <div class="skills">
+
+    <button class="skill"
+      onclick="showSkill(this,'Communication','I can express ideas clearly and communicate effectively with others.')">
+      Communication
+    </button>
+
+    <button class="skill"
+      onclick="showSkill(this,'Teamwork','I enjoy collaborating, sharing ideas and working toward common goals.')">
+      Teamwork
+    </button>
+
+    <button class="skill"
+      onclick="showSkill(this,'Creativity','I enjoy brainstorming, designing and developing fresh ideas.')">
+      Creativity
+    </button>
+
+    <button class="skill"
+      onclick="showSkill(this,'Leadership','I can organize tasks, support others and take responsibility.')">
+      Leadership
+    </button>
+
+    <button class="skill"
+      onclick="showSkill(this,'Time Management','I can organize priorities and manage deadlines.')">
+      Time Management
+    </button>
+
+    <button class="skill"
+      onclick="showSkill(this,'Problem Solving','I enjoy finding practical solutions to challenges.')">
+      Problem Solving
+    </button>
+
+    <button class="skill"
+      onclick="showSkill(this,'Your Skill','Describe another skill you have.')">
+      + Your Skill
+    </button>
+
+  </div>
+
+  <div class="skill-info" id="skillInfo">
+    ✨ Select a skill above to see its description!
+  </div>
+
+</section>
+
+
+<!-- PROFICIENCY -->
+<section class="reveal">
+
+  <h2 class="section-title">05. MY PROFICIENCY ✳</h2>
 
   <div class="card">
 
-    <h3>THINGS I'M GOOD AT:</h3>
-
-    <div class="skills">
-
-      <!-- REPLACE THESE WITH YOUR OWN SKILLS -->
-
-      <span class="skill">Communication</span>
-      <span class="skill">Teamwork</span>
-      <span class="skill">Leadership</span>
-      <span class="skill">Problem Solving</span>
-      <span class="skill">Creativity</span>
-      <span class="skill">Time Management</span>
-      <span class="skill">[Your Skill]</span>
-      <span class="skill">[Your Skill]</span>
-
+    <b>Communication</b>
+    <div class="progress">
+      <div class="progress-fill" data-width="90%"></div>
     </div>
+
+    <b>Creativity</b>
+    <div class="progress">
+      <div class="progress-fill" data-width="85%"></div>
+    </div>
+
+    <b>Teamwork</b>
+    <div class="progress">
+      <div class="progress-fill" data-width="95%"></div>
+    </div>
+
+    <b>Problem Solving</b>
+    <div class="progress">
+      <div class="progress-fill" data-width="80%"></div>
+    </div>
+
+    <p style="font-size:12px">
+      * Edit these percentages to reflect your actual skill levels.
+    </p>
 
   </div>
 
@@ -463,43 +898,54 @@ a {
 
 
 <!-- PROJECTS -->
-<section class="section" id="projects">
+<section id="projects" class="reveal">
 
-  <h2 class="section-title">05. MY PROJECTS ✳</h2>
+  <h2 class="section-title">06. MY CREATIONS ✳</h2>
+
+  <p style="margin-bottom:20px">
+    Click a project card to see its details!
+  </p>
 
   <div class="grid">
 
     <div class="card project"
-         onclick="window.open('https://example.com','_blank')">
+      onclick="openProject('PROJECT ONE','Describe your first project here. Include your role, the tools you used and the result.','https://example.com')">
 
-      <div class="tag">PROJECT 01</div>
-
+      <div class="project-number">PROJECT 01 / ✦</div>
       <h3>[Project Name]</h3>
-
-      <p>
-        [Describe your project, your role, and what you accomplished.]
-      </p>
-
+      <p>[Short project description]</p>
       <br>
-      <b>VIEW PROJECT ↗</b>
-
+      <b>EXPLORE PROJECT ↗</b>
     </div>
 
+    <div class="card project"
+      onclick="openProject('PROJECT TWO','Describe your second project and the skills you demonstrated.','https://example.com')">
+
+      <div class="project-number">PROJECT 02 / ✦</div>
+      <h3>[Project Name]</h3>
+      <p>[Short project description]</p>
+      <br>
+      <b>EXPLORE PROJECT ↗</b>
+    </div>
 
     <div class="card project"
-         onclick="window.open('https://example.com','_blank')">
+      onclick="openProject('PROJECT THREE','Describe another project, school activity or personal creation.','https://example.com')">
 
-      <div class="tag">PROJECT 02</div>
-
+      <div class="project-number">PROJECT 03 / ✦</div>
       <h3>[Project Name]</h3>
-
-      <p>
-        [Describe another project, school activity, or personal work.]
-      </p>
-
+      <p>[Short project description]</p>
       <br>
-      <b>VIEW PROJECT ↗</b>
+      <b>EXPLORE PROJECT ↗</b>
+    </div>
 
+    <div class="card project"
+      onclick="openProject('PROJECT FOUR','Add details about your fourth project here.','https://example.com')">
+
+      <div class="project-number">PROJECT 04 / ✦</div>
+      <h3>[Project Name]</h3>
+      <p>[Short project description]</p>
+      <br>
+      <b>EXPLORE PROJECT ↗</b>
     </div>
 
   </div>
@@ -508,64 +954,114 @@ a {
 
 
 <!-- ACHIEVEMENTS -->
-<section class="section" id="achievements">
+<section class="reveal">
 
-  <h2 class="section-title">06. ACHIEVEMENTS & AWARDS ✳</h2>
+  <h2 class="section-title">07. LITTLE WINS & BIG MOMENTS ✳</h2>
 
   <div class="card">
+    <h3>🏆 MY ACHIEVEMENTS</h3>
 
-    <ul>
-      <li>[Award / Recognition] — [Year]</li>
-      <li>[Competition / Achievement] — [Year]</li>
-      <li>[Certificate / Training] — [Year]</li>
-      <li>[Organization / Volunteer Work]</li>
+    <ul style="padding-left:20px;line-height:2">
+      <li>[Award or recognition] — [Year]</li>
+      <li>[Certificate or training] — [Year]</li>
+      <li>[Competition or accomplishment] — [Year]</li>
+      <li>[Volunteer experience or organization]</li>
     </ul>
-
   </div>
 
 </section>
 
 
+<!-- ASK ME ANYTHING -->
+<section id="questions" class="reveal">
+
+  <h2 class="section-title">08. ASK ME ANYTHING! ✳</h2>
+
+  <p style="margin-bottom:20px">
+    Curious about me? Click a question below!
+  </p>
+
+  <details class="question-card">
+    <summary>What makes me different?</summary>
+    <div class="question-answer">
+      [Talk about your unique qualities, personality
+      and what makes you stand out.]
+    </div>
+  </details>
+
+  <details class="question-card">
+    <summary>What motivates me?</summary>
+    <div class="question-answer">
+      [Write about your dreams, ambitions and motivations.]
+    </div>
+  </details>
+
+  <details class="question-card">
+    <summary>What is my biggest strength?</summary>
+    <div class="question-answer">
+      [Describe your strongest qualities and abilities.]
+    </div>
+  </details>
+
+  <details class="question-card">
+    <summary>What do I do in my free time?</summary>
+    <div class="question-answer">
+      [Add your hobbies and favorite activities.]
+    </div>
+  </details>
+
+  <details class="question-card">
+    <summary>What are my future goals?</summary>
+    <div class="question-answer">
+      [Describe your personal and professional aspirations.]
+    </div>
+  </details>
+
+  <details class="question-card">
+    <summary>Why should you work with me?</summary>
+    <div class="question-answer">
+      [Explain what you can contribute to a team
+      or organization.]
+    </div>
+  </details>
+
+</section>
+
+
 <!-- CONTACT -->
-<section class="section" id="contact">
+<section id="contact" class="reveal">
 
   <div class="contact">
 
-    <div class="tag">✦ LET'S WORK TOGETHER</div>
+    <div class="tag">✦ END OF THE FILE, START OF SOMETHING NEW</div>
 
-    <h2 style="font-size:40px; margin-bottom:15px;">
-      LET'S MAKE<br> SOMETHING GREAT!
+    <h2 style="font-size:clamp(35px,7vw,60px)">
+      LET'S CREATE<br>SOMETHING GREAT!
     </h2>
 
-    <p>
-      Have an opportunity or want to collaborate?
-      Feel free to reach out!
-    </p>
-
-    <br>
-
-    <!-- REPLACE WITH YOUR CONTACT DETAILS -->
+    <p>Have an opportunity? Let's connect!</p>
 
     <p>EMAIL:
       <a href="mailto:your@email.com">your@email.com</a>
     </p>
 
     <p>LINKEDIN:
-      <a href="https://linkedin.com/in/yourusername">
-        Your LinkedIn
-      </a>
+      <a href="https://linkedin.com/in/yourusername">My LinkedIn</a>
     </p>
 
     <p>INSTAGRAM:
-      <a href="https://instagram.com/yourusername">
-        Your Instagram
-      </a>
+      <a href="https://instagram.com/yourusername">My Instagram</a>
     </p>
 
     <br>
 
-    <button onclick="copyEmail()">
+    <button class="btn" onclick="copyEmail()">
       COPY MY EMAIL ✉
+    </button>
+
+    <button class="btn"
+      onclick="window.location.href='mailto:your@email.com'">
+      SEND ME A MESSAGE ↗
     </button>
 
   </div>
@@ -573,31 +1069,284 @@ a {
 </section>
 
 
+<!-- FOOTER -->
 <footer>
-  MADE WITH ♡ BY [YOUR NAME] — © 2026
+  MADE WITH ♡ AND A LITTLE BIT OF CHAOS BY [YOUR NAME] ✳
+  <br><br>
+  © 2026 ALL RIGHTS RESERVED.
 </footer>
 
 </div>
 
 
-<!-- INTERACTIVE JAVASCRIPT -->
+<!-- PROJECT POPUP -->
+<div class="modal" id="projectModal" onclick="closeOutside(event)">
+
+  <div class="modal-content">
+
+    <button class="close" onclick="closeProject()">X</button>
+
+    <div class="tag">✦ PROJECT DETAILS</div>
+
+    <h2 id="modalTitle">PROJECT NAME</h2>
+
+    <p id="modalDescription" style="margin:20px 0;line-height:1.8"></p>
+
+    <a id="modalLink" href="#" target="_blank" rel="noopener">
+      VIEW FULL PROJECT ↗
+    </a>
+
+  </div>
+
+</div>
+
+
+<!-- BACK TO TOP -->
+<button id="topBtn"
+  onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  ↑
+</button>
+
+
 <script>
 
-// DARK / LIGHT THEME SWITCH
+// DARK / LIGHT THEME
 function toggleTheme() {
   document.body.classList.toggle('dark');
 }
 
-// COPY EMAIL BUTTON
-function copyEmail() {
-  navigator.clipboard.writeText('your@email.com')
-    .then(() => alert('Email copied!'));
+
+// CLICKABLE TIMELINE
+function toggleTimeline(button) {
+
+  const item = button.parentElement;
+  item.classList.toggle('open');
+
+  button.textContent = button.textContent.replace(
+    item.classList.contains('open') ? '+' : '−',
+    item.classList.contains('open') ? '−' : '+'
+  );
+
 }
+
+
+// CLICKABLE SKILLS
+function showSkill(button, name, description) {
+
+  document.querySelectorAll('.skill').forEach(skill => {
+    skill.classList.remove('active');
+  });
+
+  button.classList.add('active');
+
+  const info = document.getElementById('skillInfo');
+
+  const title = document.createElement('b');
+  title.textContent = '✦ ' + name;
+
+  info.replaceChildren(title, document.createElement('br'));
+  info.appendChild(document.createTextNode(description));
+
+}
+
+
+// PROJECT POPUP
+function openProject(title, description, link) {
+
+  document.getElementById('modalTitle').textContent = title;
+
+  document.getElementById('modalDescription').textContent = description;
+
+  document.getElementById('modalLink').href = link;
+
+  document.getElementById('projectModal').classList.add('show');
+
+}
+
+function closeProject() {
+  document.getElementById('projectModal').classList.remove('show');
+}
+
+function closeOutside(event) {
+
+  if (event.target.id === 'projectModal') {
+    closeProject();
+  }
+
+}
+
+
+// COPY EMAIL
+function copyEmail() {
+
+  navigator.clipboard.writeText('your@email.com')
+    .then(() => alert('Your email has been copied!'))
+    .catch(() => alert('Please copy your email manually.'));
+
+}
+
+
+// FLOATING STICKERS
+function playSticker(element) {
+
+  element.classList.remove('bounce');
+
+  void element.offsetWidth;
+
+  element.classList.add('bounce');
+
+  setTimeout(() => {
+    element.classList.remove('bounce');
+  }, 500);
+
+}
+
+
+// DRAGGABLE PHOTO
+const photo = document.getElementById('draggablePhoto');
+
+let startX = 0;
+let startY = 0;
+let offsetX = 0;
+let offsetY = 0;
+let dragging = false;
+
+photo.addEventListener('pointerdown', event => {
+
+  if (event.button !== 0) return;
+
+  if (event.target.closest('.sticker')) return;
+
+  dragging = true;
+
+  startX = event.clientX - offsetX;
+  startY = event.clientY - offsetY;
+
+  photo.classList.add('dragging');
+
+  photo.setPointerCapture(event.pointerId);
+
+});
+
+photo.addEventListener('pointermove', event => {
+
+  if (!dragging) return;
+
+  offsetX = event.clientX - startX;
+  offsetY = event.clientY - startY;
+
+  photo.style.setProperty('--drag-x', offsetX + 'px');
+  photo.style.setProperty('--drag-y', offsetY + 'px');
+
+});
+
+function stopDragging() {
+
+  dragging = false;
+  photo.classList.remove('dragging');
+
+}
+
+photo.addEventListener('pointerup', stopDragging);
+photo.addEventListener('pointercancel', stopDragging);
+
+
+// MOUSE TRAIL
+let lastStar = 0;
+
+document.addEventListener('pointermove', event => {
+
+  if (event.pointerType !== 'mouse') return;
+
+  const now = Date.now();
+
+  if (now - lastStar < 45) return;
+
+  lastStar = now;
+
+  const star = document.createElement('span');
+
+  star.className = 'cursor-star';
+
+  star.textContent = ['✦','✧','♡','✿'][
+    Math.floor(Math.random() * 4)
+  ];
+
+  star.style.left = event.clientX + 'px';
+  star.style.top = event.clientY + 'px';
+
+  document.body.appendChild(star);
+
+  star.addEventListener('animationend', () => {
+    star.remove();
+  });
+
+});
+
+
+// SCROLL REVEAL
+const observer = new IntersectionObserver(entries => {
+
+  entries.forEach(entry => {
+
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+
+  });
+
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(section => {
+  observer.observe(section);
+});
+
+
+// ANIMATED SKILL BARS
+const skillObserver = new IntersectionObserver(entries => {
+
+  entries.forEach(entry => {
+
+    if (entry.isIntersecting) {
+
+      entry.target.querySelectorAll('.progress-fill').forEach(bar => {
+        bar.style.width = bar.dataset.width;
+      });
+
+      skillObserver.unobserve(entry.target);
+
+    }
+
+  });
+
+});
+
+document.querySelectorAll('.progress').forEach(bar => {
+  skillObserver.observe(bar);
+});
+
+
+// BACK TO TOP
+window.addEventListener('scroll', () => {
+
+  const button = document.getElementById('topBtn');
+
+  button.style.display = window.scrollY > 400 ? 'block' : 'none';
+
+});
+
+
+// ESCAPE KEY CLOSES POPUP
+document.addEventListener('keydown', event => {
+
+  if (event.key === 'Escape') {
+    closeProject();
+  }
+
+});
 
 </script>
 
 </body>
 </html>
-
-
-      
